@@ -1,4 +1,6 @@
-
+using Api_Polygon;
+using Api_Polygon.Business;
+using Api_Polygon.ContractManager;
 
 var builder = WebApplication.CreateBuilder(args);
 

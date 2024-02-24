@@ -5,8 +5,9 @@ using Nethereum.Web3.Accounts;
 using Nethereum.Hex.HexTypes;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Util;
+using Api_Polygon.Models;
 
-namespace Api_Polygon.Business
+namespace Api_Polygon.ContractManager
 {
   public class ContractSaveInteraction
     {

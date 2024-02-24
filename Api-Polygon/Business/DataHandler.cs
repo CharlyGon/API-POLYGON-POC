@@ -1,5 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using Api_Polygon.Models;
+using Api_Polygon.ContractManager;
 
 namespace Api_Polygon.Business
 {
