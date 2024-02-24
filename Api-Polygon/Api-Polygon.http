@@ -1,0 +1,6 @@
+@Api_Polygon_HostAddress = http://localhost:5043
+
+GET {{Api_Polygon_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
