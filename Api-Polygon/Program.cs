@@ -1,9 +1,20 @@
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5235";
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(int.Parse(port));
+});
+
+builder.Services.AddScoped<IDataHandler, DataHandler>();
+builder.Services.AddScoped<ContractSaveInteraction>();
+
+EnvironmentConfig.ConfigureEnvironmentVariables();
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -16,7 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Habilitar CORS
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseAuthorization();
 
