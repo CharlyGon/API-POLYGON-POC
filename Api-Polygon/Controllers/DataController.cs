@@ -5,21 +5,31 @@ using Api_Polygon.Models;
 
 namespace Api_Polygon.Controllers
 {
- [ApiController]
+    /// <summary>
+    /// Controller class responsible for handling data-related requests.
+    /// </summary>
+    [ApiController]
     [Route("api/[controller]")]
     public class DataController : ControllerBase
     {
         private readonly IDataHandler _dataHandler;
 
-
+        /// <summary>
+        /// Constructor for initializing the DataController with an instance of the data handler.
+        /// </summary>
+        /// <param name="dataHandler">The data handler used for processing data.</param>
         public DataController(IDataHandler dataHandler)
         {
             _dataHandler = dataHandler;
         }
 
-
-        [HttpGet("{transactionHash}")] // Adjust the route of the HttpGet attribute
-        public IActionResult Get(string transactionHash) // Add the transactionHash parameter
+        /// <summary>
+        /// GET endpoint for retrieving information about a transaction using its hash.
+        /// </summary>
+        /// <param name="transactionHash">The hash of the transaction to retrieve information for.</param>
+        /// <returns>An IActionResult containing information about the transaction.</returns>
+        [HttpGet("{transactionHash}")]
+        public IActionResult Get(string transactionHash)
         {
             try
             {
@@ -36,6 +46,11 @@ namespace Api_Polygon.Controllers
             }
         }
 
+        /// <summary>
+        /// POST endpoint for saving data to the blockchain.
+        /// </summary>
+        /// <param name="inputData">The data to be saved to the blockchain.</param>
+        /// <returns>An asynchronous task representing the HTTP response.</returns>
         [HttpPost("save")]
         public async Task<IActionResult> SaveToBlockchain([FromBody] DataModel inputData)
         {

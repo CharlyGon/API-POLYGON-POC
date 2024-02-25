@@ -1,6 +1,11 @@
 namespace Api_Polygon
 {
-     public static class EnvironmentConfig
+    /// <summary>
+    /// This function is used to configure the environment variables required for the application to run.
+    /// It sets up the PolygonURL, PublicAddress, PrivateKey, ContractAddress, and ContractABI environment variables.
+    /// These variables are necessary for interacting with the Polygon network and smart contracts.
+    /// </summary>
+    public static class EnvironmentConfig
     {
         public static void ConfigureEnvironmentVariables()
         {
@@ -9,6 +14,8 @@ namespace Api_Polygon
             Environment.SetEnvironmentVariable("PublicAddress", "0xC588197Fc720439537D917E55E2e9fc65B0C7f89");
             Environment.SetEnvironmentVariable("PrivateKey", "");
             Environment.SetEnvironmentVariable("ContractAddress", "0x88590c420da62f47f8e686bbd0f858f2239bdd32");
+
+            // We define the contract ABI as a JSON and configure it as an environment variable.
             string abiJson = @"
         [
             {

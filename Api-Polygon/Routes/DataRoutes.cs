@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Api_Polygon
 {
-  public static class DataRoutes
+    /// <summary>
+    /// This class defines the routes for the DataController.
+    /// It maps the routes for the GET and POST methods to the corresponding controller actions.
+    /// </summary>
+    public static class DataRoutes
     {
         public static void MapDataRoutes(this IEndpointRouteBuilder endpoints)
         {

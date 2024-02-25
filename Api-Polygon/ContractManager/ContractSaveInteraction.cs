@@ -9,13 +9,22 @@ using Api_Polygon.Models;
 
 namespace Api_Polygon.ContractManager
 {
-  public class ContractSaveInteraction
+    /// <summary>
+    /// This class manages the interaction with the smart contract deployed on the Polygon network.
+    /// It provides methods to interact with the contract, such as sending transactions and retrieving transaction receipts.
+    /// </summary>
+    public class ContractSaveInteraction
     {
         private readonly string _polygonUrl = Environment.GetEnvironmentVariable("PolygonURL");
         private readonly string _privateKey = Environment.GetEnvironmentVariable("PrivateKey");
         private readonly string _contractAddress = Environment.GetEnvironmentVariable("ContractAddress");
         private readonly string _abi = Environment.GetEnvironmentVariable("ContractABI");
 
+        /// <summary>
+        /// Interacts with the smart contract to send a transaction with the provided data.
+        /// </summary>
+        /// <param name="data">The data to be sent to the smart contract.</param>
+        /// <returns>A Task representing the asynchronous operation, containing the transaction result.</returns>
         public async Task<TransactionResult> InteractWithContract(DataModel data)
         {
             try
@@ -44,7 +53,11 @@ namespace Api_Polygon.ContractManager
                 // Verificar si el balance es suficiente para cubrir el costo de la transacción
                 if (balance.Value < totalCostEstimate)
                 {
-                    throw new Exception($"Fondos insuficientes para enviar la transacción. Balance: {balance.Value}, Costo estimado: {totalCostEstimate}");
+                    return new TransactionResult
+                    {
+                        TransactionStatus = "Fail",
+                        ErrorMessage = $"Fondos insuficientes para enviar la transacción. Balance: {balance.Value}, Costo estimado: {totalCostEstimate}"
+                    };
                 }
 
                 // Enviar la transacción y obtener el hash
@@ -76,8 +89,13 @@ namespace Api_Polygon.ContractManager
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al interactuar con el contrato: {ex.Message}");
-                throw;
+                Console.WriteLine("Error al interactuar con el contrato: {0}", ex.Message);
+
+                return new TransactionResult
+                {
+                    TransactionStatus = "Fail",
+                    ErrorMessage = $"Error al interactuar con el contrato: {ex.Message}"
+                };
             }
         }
     }
