@@ -36,7 +36,7 @@ namespace Api_Polygon.Business
             try
             {
                 var transactionHash = await _contractInteraction.InteractWithContract(inputData);
-                Console.WriteLine($"Data sent successfully to blockchain. Transaction Hash: {transactionHash}");
+                Console.WriteLine($"Data sent successfully to blockchain. Transaction Hash: {transactionHash.TransactionHash}");
 
                 return transactionHash;
             }
