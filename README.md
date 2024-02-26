@@ -104,7 +104,7 @@ Alternatively, you can run the application in a Docker container. Execute the fo
 
 ```bash
 docker build -t api-polygon-mvp .
-docker run -d -p 80:80 --name api-polygon-mvp-container api-polygon-mvp
+docker run -d -p 5235:5235 --name api-polygon-mvp-container api-polygon-mvp
 ```
 
 ## Usage
