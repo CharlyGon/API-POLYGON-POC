@@ -35,50 +35,48 @@ namespace Api_Polygon.ContractManager
                 var contract = web3.Eth.GetContract(_abi, _contractAddress);
                 var setFunction = contract.GetFunction("set");
 
-                // Obtener el balance de la cuenta
+                // Get the account balance
                 var balance = await web3.Eth.GetBalance.SendRequestAsync(account.Address);
-                Console.WriteLine($"Balance actual: {balance.Value}");
+                Console.WriteLine($"current Balance: {balance.Value}");
 
-                // Obtener el precio del gas recomendado por la red
+                // Get the gas price recommended by the network
                 var gasPrice = await web3.Eth.GasPrice.SendRequestAsync();
-                Console.WriteLine($"GasPrice actual: {gasPrice.Value}");
+                Console.WriteLine($"Current GasPrice: {gasPrice.Value}");
 
-                // Estimar el gas necesario para la transacción
+                // Estimate the gas required for the transaction
                 var gasLimitEstimate = await setFunction.EstimateGasAsync(account.Address, null, null, data.Message);
-                Console.WriteLine($"Estimación de GasLimit: {gasLimitEstimate.Value}");
+                Console.WriteLine($"Estimation of GasLimit: {gasLimitEstimate.Value}");
 
-                // Calcular el costo total estimado de la transacción (gasLimit * gasPrice)
+                // Calculate the estimated total cost of the transaction (gasLimit * gasPrice)
                 var totalCostEstimate = gasLimitEstimate.Value * gasPrice.Value;
 
-                // Verificar si el balance es suficiente para cubrir el costo de la transacción
                 if (balance.Value < totalCostEstimate)
                 {
                     return new TransactionResult
                     {
                         TransactionStatus = "Fail",
-                        ErrorMessage = $"Fondos insuficientes para enviar la transacción. Balance: {balance.Value}, Costo estimado: {totalCostEstimate}"
+                        ErrorMessage = $"Insufficient funds to send transaction.  Balance: {balance.Value}, Estimated cost: {totalCostEstimate}"
                     };
                 }
 
-                // Enviar la transacción y obtener el hash
+                // Send transaction and get hash
                 var transactionHash = await setFunction.SendTransactionAsync(account.Address, new HexBigInteger(gasLimitEstimate.Value), gasPrice, null, data.Message);
-                Console.WriteLine($"Transacción enviada. Hash: {transactionHash}");
+                Console.WriteLine($"Send transaction. Hash: {transactionHash}");
 
-                // Esperar la confirmación de la transacción
+                // Wait for transaction confirmation
                 TransactionReceipt receipt = null;
                 while (receipt == null)
                 {
                     receipt = await web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(transactionHash);
-                    await Task.Delay(1000); // Esperar 1 segundo antes de volver a intentar obtener el recibo
+                    await Task.Delay(1000); // Wait 1 second before retry receipt
                 }
 
-                // Verificar el estado de la transacción
                 var transactionStatus = receipt.Status.Value == 1 ? "Success" : "Fail";
-                Console.WriteLine($"Estado de la transacción: {transactionStatus}");
+                Console.WriteLine($"Transaction status: {transactionStatus}");
 
-                // Obtener el costo de la transacción
+                // Get the transaction cost
                 var transactionCost = UnitConversion.Convert.FromWei(totalCostEstimate);
-                Console.WriteLine($"Costo de la transacción: {transactionCost} MATIC");
+                Console.WriteLine($"transaction cost: {transactionCost} MATIC");
 
                 return new TransactionResult
                 {
@@ -89,12 +87,12 @@ namespace Api_Polygon.ContractManager
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al interactuar con el contrato: {0}", ex.Message);
+                Console.WriteLine("Error when interacting with the contract: {0}", ex.Message);
 
                 return new TransactionResult
                 {
                     TransactionStatus = "Fail",
-                    ErrorMessage = $"Error al interactuar con el contrato: {ex.Message}"
+                    ErrorMessage = $"Error when interacting with the contract: {ex.Message}"
                 };
             }
         }
