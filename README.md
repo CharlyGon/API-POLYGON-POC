@@ -1,173 +1,175 @@
-# API-POLYGON-MVP
+"# API-POLYGON-MVP
 
-API-POLYGON-MVP es una aplicación backend desarrollada en ASP.NET Core que interactúa con la red Polygon (anteriormente Matic) para realizar transacciones y consultar información sobre la blockchain.
+API-POLYGON-MVP is a backend application developed in ASP.NET Core that interacts with the Polygon network (formerly Matic) to carry out transactions and consult information on the blockchain.
 
-## Menú
+## Menu
 
 - [API-POLYGON-MVP](#api-polygon-mvp)
-  - [Menú](#menú)
-  - [Descripción](#descripción)
-  - [Contrato Utilizado en el Proyecto](#contrato-utilizado-en-el-proyecto)
-    - [Comentarios sobre el Contrato:](#comentarios-sobre-el-contrato)
-  - [Requisitos](#requisitos)
-  - [Configuración](#configuración)
-  - [Instalación y ejecución](#instalación-y-ejecución)
-  - [Uso](#uso)
-  - [Despliegue del Contrato](#despliegue-del-contrato)
-  - [Creación de una Cuenta en MetaMask y Conexión a la Red Mumbai de Polygon](#creación-de-una-cuenta-en-metamask-y-conexión-a-la-red-mumbai-de-polygon)
-  - [Configuración](#configuración-1)
-  - [Creación de una Cuenta en Infura](#creación-de-una-cuenta-en-infura)
-  - [Contribución](#contribución)
+  - [Menu](#menu)
+  - [Description](#description)
+  - [Contract Used in the Project](#contract-used-in-the-project)
+    - [Comments on the Contract:](#comments-on-the-contract)
+  - [Requirements](#requirements)
+  - [Configuration](#configuration)
+  - [Installation and Execution](#installation-and-execution)
+  - [Usage](#usage)
+  - [Contract Deployment](#contract-deployment)
+  - [Creating an Account on MetaMask and Connecting to the Mumbai Polygon Network](#creating-an-account-on-metamask-and-connecting-to-the-mumbai-polygon-network)
+  - [Configuration](#configuration-1)
+  - [Creating an Account on Infura](#creating-an-account-on-infura)
+  - [Contribution](#contribution)
 
 
-## Descripción
+## Description
 
-Este proyecto proporciona una API que permite enviar transacciones a la red Polygon y consultar información sobre transacciones utilizando el hash de transacción. Utiliza la biblioteca Nethereum para interactuar con la red Ethereum.
+This project provides an API that allows sending transactions to the Polygon network and consulting information on transactions using the transaction hash. It uses the Nethereum library to interact with the Ethereum network.
 
 
-## Contrato Utilizado en el Proyecto
+## Contract Used in the Project
 
-El contrato utilizado en este proyecto es un contrato simple de almacenamiento desarrollado en Solidity. Aquí está el código del contrato:
+The contract used in this project is a simple storage contract developed in Solidity. Here is the contract code:
 
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
 contract SimpleStorage {
-    // Variable privada para almacenar los datos
+    // Private variable to store data
     string private _storedData;
 
-    // Función para actualizar el valor almacenado
+    // Function to update the stored value
     function set(string memory x) public {
         _storedData = x;
     }
 
-    // Función para obtener el valor almacenado
+    // Function to get the stored value
     function get() public view returns (string memory) {
         return _storedData;
     }
 }
 ```
 
-### Comentarios sobre el Contrato:
+### Comments on the Contract:
 
-- **SPDX-License-Identifier**: Esta línea especifica el tipo de licencia bajo la cual se publica el contrato. En este caso, se utiliza la licencia MIT, que es una licencia de código abierto que permite a los usuarios utilizar, modificar y distribuir el código con pocas restricciones.
+- **SPDX-License-Identifier**: This line specifies the type of license under which the contract is published. In this case, the MIT license is used, which is an open-source license that allows users to use, modify, and distribute the code with few restrictions.
 
-- **pragma solidity ^0.8.7**: Esta declaración indica que el contrato está escrito para la versión 0.8.7 del compilador de Solidity o versiones superiores compatibles.
+- **pragma solidity ^0.8.7**: This statement indicates that the contract is written for version 0.8.7 of the Solidity compiler or higher compatible versions.
 
-- **SimpleStorage**: Este es el nombre del contrato. Es un contrato simple que proporciona funciones para establecer y obtener un valor de cadena.
+- **SimpleStorage**: This is the name of the contract. It is a simple contract that provides functions to set and get a string value.
 
-- **_storedData**: Esta es una variable privada que almacena el valor de cadena.
+- **_storedData**: This is a private variable that stores the string value.
 
-- **set**: Esta función permite actualizar el valor almacenado en `_storedData` a través de un parámetro de entrada.
+- **set**: This function allows updating the stored value in `_storedData` through an input parameter.
 
-- **get**: Esta función permite obtener el valor actualmente almacenado en `_storedData`.
+- **get**: This function allows getting the currently stored value in `_storedData`.
 
-El contrato proporciona una funcionalidad básica de almacenamiento de datos, lo que lo hace adecuado para propósitos de demostración y pruebas en este proyecto.
+The contract provides basic data storage functionality, making it suitable for demonstration and testing purposes in this project.
 
 
-## Requisitos
+## Requirements
 
 - .NET Core 8.0 SDK
-- Docker (opcional, para ejecutar la aplicación en contenedores)
+- Docker (optional, to run the application in containers)
 
-## Configuración
+## Configuration
 
-Antes de ejecutar la aplicación, asegúrate de configurar las siguientes variables de entorno:
+Before running the application, make sure to configure the following environment variables:
 
-- `PolygonURL`: URL de la red Polygon a la que te conectarás.
-- `PublicAddress`: Dirección pública de la cuenta utilizada para enviar transacciones.
-- `PrivateKey`: Clave privada de la cuenta que utilizarás para enviar transacciones.
-- `ContractAddress`: Dirección del contrato inteligente desplegado en la red Polygon.
-- `ContractABI`: ABI del contrato inteligente en formato JSON.
+- `PolygonURL`: URL of the Polygon network you will connect to.
+- `PublicAddress`: Public address of the account used to send transactions.
+- `PrivateKey`: Private key of the account you will use to send transactions.
+- `ContractAddress`: Address of the smart contract deployed on the Polygon network.
+- `ContractABI`: Smart contract ABI in JSON format.
 
-Puedes obtener el ABI de tu contrato inteligente y configurarlo como una variable de entorno. Para desplegar el contrato, puedes usar Remix Ethereum IDE en [este enlace](https://remix.ethereum.org/).
+You can obtain the ABI of your smart contract and configure it as an environment variable. To deploy the contract, you can use Remix Ethereum IDE at [this link](https://remix.ethereum.org/).
 
-## Instalación y ejecución
+## Installation and Execution
 
-1. Clona el repositorio:
+1. Clone the repository:
 
 ```bash
-git clone https://github.com/tuusuario/API-POLYGON-MVP.git
+git clone https://github.com/yourusername/API-POLYGON-MVP.git
 cd API-POLYGON-MVP
 ```
 
-2. Configura las variables de entorno mencionadas anteriormente.
+2. Configure the environment variables mentioned above.
 
-3. Compila y ejecuta la aplicación:
+3. Compile and run the application:
 
 ```bash
 dotnet run
 ```
 
-Alternativamente, puedes ejecutar la aplicación en un contenedor Docker. Ejecuta los siguientes comandos:
+Alternatively, you can run the application in a Docker container. Execute the following commands:
 
 ```bash
 docker build -t api-polygon-mvp .
 docker run -d -p 80:80 --name api-polygon-mvp-container api-polygon-mvp
 ```
 
-## Uso
+## Usage
 
-Una vez que la aplicación esté en funcionamiento, puedes interactuar con ella a través de las siguientes rutas:
+Once the application is running, you can interact with it through the following routes:
 
-- `POST /api/data/save`: Envía una transacción a la red Polygon. Asegúrate de tener Matic en tu cuenta para pagar el gas.
-- `GET /api/data/{transactionHash}`: Consulta información sobre una transacción utilizando su hash.
+- `POST /api/data/save`: Sends a transaction to the Polygon network. Make sure you have Matic in your account to pay for gas.
+- `GET /api/data/{transactionHash}`: Consults information on a transaction using its hash.
 
-Para obtener Matic de prueba, puedes utilizar [este grifo](https://www.alchemy.com/faucets/polygon-mumbai).
+To get test Matic, you can use [this faucet](https://www.alchemy.com/faucets/polygon-mumbai).
 
-## Despliegue del Contrato
+## Contract Deployment
 
-Para desplegar el contrato inteligente, sigue estos pasos:
+To deploy the smart contract, follow these steps:
 
-1. Abre Remix Ethereum IDE en [este enlace](https://remix.ethereum.org/).
-2. Copia y pega el código fuente de tu contrato en el editor.
-3. Compila y despliega el contrato utilizando Remix.
-4. Una vez desplegado, copia la dirección del contrato y el ABI.
+1. Open Remix Ethereum IDE at [this link](https://remix.ethereum.org/
 
-Luego, configura la dirección del contrato desplegado y el ABI como variables de entorno en tu aplicación.
+).
+2. Copy and paste your contract's source code into the editor.
+3. Compile and deploy the contract using Remix.
+4. Once deployed, copy the contract's address and ABI.
 
-## Creación de una Cuenta en MetaMask y Conexión a la Red Mumbai de Polygon
+Then, configure the deployed contract's address and ABI as environment variables in your application.
 
-Para interactuar con la red Polygon y enviar transacciones desde tu aplicación, necesitarás una billetera Ethereum como MetaMask. Sigue estos pasos para crear una cuenta en MetaMask y conectarla a la red Mumbai de Polygon:
+## Creating an Account on MetaMask and Connecting to the Mumbai Polygon Network
 
-1. Instala la extensión MetaMask en tu navegador desde [MetaMask](https://metamask.io/).
-2. Abre MetaMask y sigue las instrucciones para crear una nueva cuenta.
-3. Guarda tu clave privada de forma segura. Esta clave te permitirá acceder a tu cuenta desde cualquier dispositivo.
-4. Una vez que hayas creado tu cuenta de MetaMask, ve a [Chainlist.org](https://chainlist.org/).
-5. En Chainlist, busca y selecciona la red "Mumbai Testnet" de Polygon.
-6. Haz clic en "Connect to MetaMask" y sigue las instrucciones para conectar tu billetera MetaMask a la red Mumbai de Polygon.
+To interact with the Polygon network and send transactions from your application, you will need an Ethereum wallet like MetaMask. Follow these steps to create an account on MetaMask and connect it to the Mumbai Polygon network:
 
-Con tu cuenta de MetaMask conectada a la red Mumbai de Polygon y suficiente Matic en ella para pagar el gas, podrás interactuar con la red Polygon a través de la API.
+1. Install the MetaMask extension in your browser from [MetaMask](https://metamask.io/).
+2. Open MetaMask and follow the instructions to create a new account.
+3. Securely save your private key. This key will allow you to access your account from any device.
+4. Once you have created your MetaMask account, go to [Chainlist.org](https://chainlist.org/).
+5. In Chainlist, search for and select the "Mumbai Testnet" network of Polygon.
+6. Click on "Connect to MetaMask" and follow the instructions to connect your MetaMask wallet to the Mumbai Polygon network.
 
-## Configuración
+With your MetaMask account connected to the Mumbai Polygon network and enough Matic in it to pay for gas, you will be able to interact with the Polygon network through the API.
 
-Antes de ejecutar la aplicación, asegúrate de configurar las siguientes variables de entorno:
+## Configuration
 
-- `PolygonURL`: URL de la red Polygon a la que te conectarás. Puedes obtener esta URL al crear una cuenta en Infura y seleccionar la testnet de Polygon.
-- `PrivateKey`: Clave privada de la cuenta que utilizarás para enviar transacciones. Esta clave se puede obtener de tu billetera Ethereum.
-- `ContractAddress`: Dirección del contrato desplegado en la red Polygon. Puedes obtener esta dirección después de desplegar el contrato en Remix Ethereum IDE o cualquier otra herramienta de despliegue de contratos.
+Before running the application, make sure to configure the following environment variables:
 
-## Creación de una Cuenta en Infura
+- `PolygonURL`: URL of the Polygon network you will connect to. You can obtain this URL by creating an account on Infura and selecting the Polygon testnet.
+- `PrivateKey`: Private key of the account you will use to send transactions. This key can be obtained from your Ethereum wallet.
+- `ContractAddress`: Address of the contract deployed on the Polygon network. You can obtain this address after deploying the contract on Remix Ethereum IDE or any other contract deployment tool.
 
-Para utilizar la testnet de Polygon a través de Infura, necesitarás crear una cuenta en Infura y seleccionar la testnet de Polygon como tu red preferida. Sigue estos pasos para crear una cuenta en Infura:
+## Creating an Account on Infura
 
-1. Ve al sitio web de [Infura](https://infura.io/).
+To use the Polygon testnet through Infura, you will need to create an account on Infura and select the Polygon testnet as your preferred network. Follow these steps to create an account on Infura:
 
-2. Regístrate para obtener una cuenta gratuita o inicia sesión si ya tienes una cuenta.
+1. Go to the [Infura](https://infura.io/) website.
 
-3. Después de iniciar sesión, ve al panel de control de Infura.
+2. Sign up for a free account or log in if you already have an account.
 
-4. Haz clic en "Create New Project" (Crear Nuevo Proyecto).
+3. After logging in, go to Infura's dashboard.
 
-5. Selecciona "Polygon (Matic)" como la red para tu proyecto.
+4. Click on "Create New Project" (Create New Project).
 
-6. Completa el formulario con los detalles de tu proyecto y haz clic en "Create" (Crear).
+5. Select "Polygon (Matic)" as the network for your project.
 
-7. Una vez creado el proyecto, podrás obtener la URL de la red Polygon (Matic) desde el panel de control de tu proyecto en Infura. Esta URL será utilizada como el valor de la variable de entorno `PolygonURL` en tu aplicación.
+6. Complete the form with your project details and click on "Create" (Create).
 
-Una vez configurada tu cuenta en Infura y obtenida la URL de la red Polygon, podrás utilizarla en tu aplicación para interactuar con la testnet de Polygon.
+7. Once the project is created, you will be able to obtain the URL of the Polygon (Matic) network from your project's dashboard on Infura. This URL will be used as the value for the `PolygonURL` environment variable in your application.
 
-## Contribución
+Once your account on Infura is set up and you have obtained the URL of the Polygon network, you will be able to use it in your application to interact with the Polygon testnet.
 
-¡Las contribuciones son bienvenidas! Si deseas contribuir a este proyecto, crea una nueva rama y presenta una solicitud de extracción.
+## Contribution
+
+Contributions are welcome! If you would like to contribute to this project, create a new branch and submit a pull request."
