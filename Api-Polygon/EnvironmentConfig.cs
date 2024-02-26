@@ -11,7 +11,7 @@ namespace Api_Polygon
         {
             // Set up the environment variable at runtime
             Environment.SetEnvironmentVariable("PolygonURL", "");
-            Environment.SetEnvironmentVariable("PublicAddress", "0xC588197Fc720439537D917E55E2e9fc65B0C7f89");
+            Environment.SetEnvironmentVariable("PublicAddress", "");
             Environment.SetEnvironmentVariable("PrivateKey", "");
             Environment.SetEnvironmentVariable("ContractAddress", "0x88590c420da62f47f8e686bbd0f858f2239bdd32");
 
