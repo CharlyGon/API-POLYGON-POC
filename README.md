@@ -1,4 +1,4 @@
-"# API-POLYGON-MVP
+# API-POLYGON-MVP
 
 API-POLYGON-MVP is a backend application developed in ASP.NET Core that interacts with the Polygon network (formerly Matic) to carry out transactions and consult information on the blockchain.
 
@@ -172,4 +172,4 @@ Once your account on Infura is set up and you have obtained the URL of the Polyg
 
 ## Contribution
 
-Contributions are welcome! If you would like to contribute to this project, create a new branch and submit a pull request."
+Contributions are welcome! If you would like to contribute to this project, create a new branch and submit a pull request.
