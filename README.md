@@ -1,10 +1,10 @@
-# API-POLYGON-POC
+# API-POLYGON
 
-API-POLYGON-POC is a backend application developed in ASP.NET Core that interacts with the Polygon network (formerly Matic) to carry out transactions and consult information on the blockchain.
+API-POLYGON is a backend application developed in ASP.NET Core that interacts with the Polygon network (formerly Matic) to carry out transactions and consult information on the blockchain.
 
 ## Menu
 
-- [API-POLYGON-POC](#api-polygon-poc)
+- [API-POLYGON](#api-polygon)
   - [Menu](#menu)
   - [Description](#description)
   - [Contract Used in the Project](#contract-used-in-the-project)
